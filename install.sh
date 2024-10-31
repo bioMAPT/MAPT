@@ -1,4 +1,4 @@
-#!/bin/ksh
+#!/bin/bash
 #
 # Install Microbio Automatic Photography Tool firmware
 
@@ -6,18 +6,7 @@
 set -e
 
 install_klipper(){(
-	# clone the klipper repo
-	git clone --filter=tree:0 --branch=v0.12.0 https://github.com/Klipper3d/klipper.git 
-
 	cd klipper
-
-	# increase the timeouts to something more suitable for this application
-	sed -r -i 's/TRSYNC_TIMEOUT = 0.025/TRSYNC_TIMEOUT = 0.25/' klippy/mcu.py
-	sed -r -i 's/TRSYNC_SINGLE_MCU_TIMEOUT = 0.250/TRSYNC_SINGLE_MCU_TIMEOUT = 2.50/' klippy/mcu.py
-
-	# update debian install script for bookworm
-	sed -r -i 's/python-dev /python-dev-is-python3 /' scripts/install-debian.sh
-	sed -r -i 's/python2/python3/' scripts/install-debian.sh
 
 	# install klipper
 	./scripts/install-debian.sh
