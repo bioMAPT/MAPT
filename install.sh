@@ -28,7 +28,7 @@ install_mapt(){(
 	ln -s ${PWD}/klipper.cfg ${HOME}/printer.cfg
 
 	# install the systemd service
-	cat > /etc/systemd/system/mapt.service <<EOF
+	sudo tee /etc/systemd/system/mapt.service > /dev/null <<EOF
 [Service]
 ExecStart=${PWD}/backend.py
 EOF
