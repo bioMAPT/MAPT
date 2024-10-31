@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/ksh
 #
 # Install Microbio Automatic Photography Tool firmware
 
@@ -35,11 +35,6 @@ install_klipper(){(
 )}
 
 install_mapt(){(
-	# clone the project repo
-	git clone --filter=tree:0 https://github.com/bioMAPT/MAPT.git
-
-	cd MAPT
-
 	# install the klipper config
 	ln -s ${PWD}/klipper.cfg ${HOME}/printer.cfg
 
@@ -53,4 +48,4 @@ EOF
 )}
 
 install_klipper
-install_mapt
+#install_mapt
