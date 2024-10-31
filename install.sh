@@ -8,6 +8,8 @@ set -e
 install_klipper(){(
 	cd klipper
 
+	ls
+
 	# install klipper
 	./scripts/install-debian.sh
 
