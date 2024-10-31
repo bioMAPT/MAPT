@@ -37,4 +37,4 @@ EOF
 )}
 
 install_klipper
-#install_mapt
+install_mapt
