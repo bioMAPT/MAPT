@@ -32,7 +32,7 @@ class Magnet:
         self.watchdog_thread = None
 
     def watchdog(self, shutdown_time):
-        while shutdown_time > time.time() && self.lock.locked():
+        while shutdown_time > time.time() and self.lock.locked():
             time.sleep(1)
         if self.lock.locked():
             print("ERROR: magnet left on for too long")
