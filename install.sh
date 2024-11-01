@@ -46,7 +46,6 @@ EOF
 	sudo systemctl enable --now mapt
 )}
 
-get_config
 install_klipper
 install_mapt
 
