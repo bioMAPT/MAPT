@@ -39,11 +39,15 @@ install_mapt(){(
 
 	# install the systemd service
 	sudo tee /etc/systemd/system/mapt.service > /dev/null <<EOF
+[Unit]
+Requires=klipper.service
+After=klipper.service
+
 [Service]
 ExecStart=${PWD}/backend.py
 EOF
 	sudo systemctl daemon-reload 
-	sudo systemctl enable --now mapt
+	#sudo systemctl enable --now mapt
 )}
 
 install_klipper
