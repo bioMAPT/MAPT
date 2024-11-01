@@ -5,12 +5,11 @@
     <title>BioMAPT UI</title>
 </head>
 <body>
+            <form action="/" method="POST">
     <p>BioMAPT UI</p>
     </br>
-            <form action="/register_press" method="POST">
                 <button type="submit" value="start" name="action">START</button>
                 <button type="submit" value="stop" name="action">STOP</button>
-            </form>
     </br>
 
 
@@ -25,21 +24,16 @@
     </tr>
     <tr>
         <td>
-            <input type="radio" id="4Hr_choice" name="radAnswer">
+            <input type="radio" value="4" name="freq">
         </td>
         <td>
-            <input type="radio" id="6Hr_choice" name="radAnswer">
+            <input type="radio" value="6" name="freq">
         </td>
         <td>
-            <input type="radio" id="12Hr_choice" name="radAnswer">
+            <input type="radio" value="12" name="freq">
         </td>
         <td>
-            <input type="radio" id="24Hr_choice" name="radAnswer">
-        </td>
-        <td>
-        <form>
-            <input type="text" id="CustomHr_choice" name="radAnswer"><br>
-        </form>
+            <input type="radio" value="24" name="freq">
         </td>
     </tr>
     </br></br>
@@ -52,9 +46,7 @@
     <tr>
         <td>10</td>
         <td>
-            <form>
                 <input type="text" id="plt10_name" name="plt10_name"><br>
-            </form>
         </td>
         <td>
             <input type="checkbox" id="plt10_status" name="plt10_status">
@@ -63,9 +55,7 @@
     <tr>
         <td>9</td>
         <td>
-            <form>
                 <input type="text" id="plt9_name" name="plt9_name"><br>
-            </form>
         </td>
         <td>
             <input type="checkbox" id="plt9_status" name="plt9_status">
@@ -74,9 +64,7 @@
         <tr>
         <td>8</td>
         <td>
-            <form>
                 <input type="text" id="plt8_name" name="plt8_name"><br>
-            </form>
         </td>
         <td>
             <input type="checkbox" id="plt8_status" name="plt8_status">
@@ -85,9 +73,7 @@
         <tr>
         <td>7</td>
         <td>
-            <form>
                 <input type="text" id="plt7_name" name="plt7_name"><br>
-            </form>
         </td>
         <td>
             <input type="checkbox" id="plt7_status" name="plt7_status">
@@ -96,9 +82,7 @@
         <tr>
         <td>6</td>
         <td>
-            <form>
                 <input type="text" id="plt6_name" name="plt6_name"><br>
-            </form>
         </td>
         <td>
             <input type="checkbox" id="plt6_status" name="plt6_status">
@@ -107,9 +91,7 @@
         <tr>
         <td>5</td>
         <td>
-            <form>
                 <input type="text" id="plt5_name" name="plt5_name"><br>
-            </form>
         </td>
         <td>
             <input type="checkbox" id="plt5_status" name="plt5_status">
@@ -118,9 +100,7 @@
         <tr>
         <td>4</td>
         <td>
-            <form>
                 <input type="text" id="plt4_name" name="plt4_name"><br>
-            </form>
         </td>
         <td>
             <input type="checkbox" id="plt4_status" name="plt4_status">
@@ -129,9 +109,7 @@
         <tr>
         <td>3</td>
         <td>
-            <form>
                 <input type="text" id="plt3_name" name="plt3_name"><br>
-            </form>
         </td>
         <td>
             <input type="checkbox" id="plt3_status" name="plt3_status">
@@ -140,9 +118,7 @@
         <tr>
         <td>2</td>
         <td>
-            <form>
                 <input type="text" id="plt2_name" name="plt2_name"><br>
-            </form>
         </td>
         <td>
             <input type="checkbox" id="plt2_status" name="plt2_status">
@@ -151,15 +127,14 @@
         <tr>
         <td>1</td>
         <td>
-            <form>
                 <input type="text" id="plt1_name" name="plt1_name"><br>
-            </form>
         </td>
         <td>
             <input type="checkbox" id="plt1_status" name="plt1_status">
         </td>
     </tr>
     </table>
-    <button type="button">Save Settings</button>
+    <button type="submit" name="action" value="save">Save Settings</button>
+            </form>
 </body>
 </html>

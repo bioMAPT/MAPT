@@ -20,12 +20,12 @@ install_klipper(){(
 
 	# install klipper-mcu
 	sudo make flash
-	sed -r 's/^ExecStart=.*$/\0\nExecStartPost=chown '"${USER}"' \/tmp\/klipper_host_mcu/' scripts/klipper-mcu.service | sudo tee /etc/systemd/system/klipper-mcu.service > /dev/null
+	cat scripts/klipper-mcu.service <<< "User=${USER}" | sudo tee /etc/systemd/system/klipper-mcu.service >/dev/null
 	sudo systemctl daemon-reload
  	sudo systemctl enable --now klipper-mcu
 
 	# install klipper to control board
-	if [ -n "${KLIPPER_SERIAL}" ]; then
+	if [ -c ${KLIPPER_SERIAL} ]; then
 		echo "CONFIG_MACH_atmega1284p=y" > .config
 		make olddefconfig
 		make -j$(nproc)
@@ -34,24 +34,41 @@ install_klipper(){(
 )}
 
 install_mapt(){(
+	sudo apt install -y python3-serial python3-flask python3-picamera2 python3-waitress authbind
+
 	# install the klipper config
 	ln -s ${PWD}/klipper.cfg ${HOME}/printer.cfg
 
+	# configure authbind
+	sudo touch /etc/authbind/byport/80
+	sudo chmod 777 /etc/authbind/byport/80
+
+	# set the hostname
+	if [ "$(hostname)" == "raspberrypi" ]; then
+		for f in /etc/hostname /etc/hosts; do sudo sed -r -i 's/raspberrypi/mapt/g' $f; done
+	fi
+
 	# install the systemd service
-	sudo tee /etc/systemd/system/mapt.service > /dev/null <<EOF
+	sudo tee /etc/systemd/system/mapt.service >/dev/null <<EOF
 [Unit]
 Requires=klipper.service
-After=klipper.service
+
+[Install]
+WantedBy=multi-user.target
 
 [Service]
-ExecStart=${PWD}/backend.py
+User=${USER}
+Environment=PYTHONPATH=${PWD}
+ExecStart=authbind python -m mapt
 EOF
+
 	sudo systemctl daemon-reload 
-	#sudo systemctl enable --now mapt
+	sudo systemctl enable --now mapt
 )}
 
 install_klipper
 install_mapt
 
 echo
-echo Finished installing MAPT.
+echo "Finished installing MAPT. The raspberry pi will now reboot. Wait 2 minutes, then navigate to http://$(hostname).local/ from a device on the same wifi network."
+sudo reboot
