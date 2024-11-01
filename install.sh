@@ -44,7 +44,7 @@ Requires=klipper.service
 After=klipper.service
 
 [Service]
-ExecStart=${PWD}/backend.py
+ExecStart=${PWD}/mapt/backend.py
 EOF
 	sudo systemctl daemon-reload 
 	#sudo systemctl enable --now mapt
