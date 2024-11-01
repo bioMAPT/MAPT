@@ -5,8 +5,6 @@ import time
 import threading
 import sys
 
-import ui
-
 class MotorCtrl:
     def __init__(self):
         self.comm = Serial(port='/tmp/printer')
