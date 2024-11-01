@@ -34,6 +34,8 @@ install_klipper(){(
 )}
 
 install_mapt(){(
+	sudo apt install -y python3-serial
+
 	# install the klipper config
 	ln -s ${PWD}/klipper.cfg ${HOME}/printer.cfg
 
@@ -46,6 +48,7 @@ After=klipper.service
 [Service]
 ExecStart=${PWD}/mapt/backend.py
 EOF
+
 	sudo systemctl daemon-reload 
 	#sudo systemctl enable --now mapt
 )}
