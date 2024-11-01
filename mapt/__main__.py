@@ -1,4 +1,3 @@
-import backend
-import ui
+from . import backend, ui
 
 print("main file")
