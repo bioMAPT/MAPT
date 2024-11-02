@@ -83,5 +83,5 @@ class Backend:
     def stop(self):
         print("got stop command")
 
-    def save(self):
+    def save(self, form):
         print("got save command")
