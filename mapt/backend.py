@@ -88,5 +88,5 @@ class Backend:
     def save(self, form):
         print("got save command")
         for i in form:
-            print(i)
+            print(i,form[i])
 
