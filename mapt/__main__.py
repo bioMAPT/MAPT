@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 
 from .backend import Backend
 
-#backend = Backend()
+backend = Backend()
 
 app=Flask(__name__, template_folder='templates')
 
