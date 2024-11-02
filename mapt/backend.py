@@ -6,8 +6,8 @@ import threading
 import sys
 import re
 
-plate_enable_re = re.compile('plt([0-9]\+)_status')
-plate_name_re = re.compile('plt([0-9]\+)_name')
+plate_enable_re = re.compile('plt([0-9]+)_status')
+plate_name_re = re.compile('plt([0-9]+)_name')
 
 class MotorCtrl:
     def __init__(self):
