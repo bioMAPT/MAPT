@@ -109,3 +109,6 @@ class Backend:
 
         self.plate_names = names
         self.plate_enabled = enabled
+        print(self.freq)
+        print(names)
+        print(enabled)
