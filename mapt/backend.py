@@ -56,10 +56,12 @@ class Magnet:
         self.ctrl.send_gcode("SET_PIN PIN=magnet VALUE=0")
 
 class Backend:
-    plate_location = list(range(15, 21, 15+21*5))
+    plate_location = list(range(15, 21, 15+21*5)) + list(range(150, 21, 150+21*5))
     plate_names = [""]*10
     plate_enabled = [False]*10
     freq = 6
+    control_thread = None
+    stop_thread = threading.Lock()
 
     def __init__(self):
         self.comm = MotorCtrl()
@@ -81,14 +83,44 @@ class Backend:
         self.comm.send_gcode("G0 X170")
         self.comm.send_gcode("G0 X155")
 
+    def disable_motors(self):
+        pass #TODO
+
     def take_pic(self):
         pass # TODO
 
+    def control_loop(self):
+        while self.stop_thread.acquire(False) == False:
+            self.home()
+
+            for i in range(10):
+                if self.stop_thread.acquire(False):
+                    self.disable_motors()
+                    return
+                if self.plate_enabled[i]:
+                    self.go_to(i)
+                    self.pull()
+                    self.take_pic()
+                    self.push()
+
+            self.disable_motors()
+            if self.stop_thread.acquire(False):
+                return
+            time.sleep(self.freq * 60 * 60)
+
     def start(self):
-        print("got start command")
+        if self.control_thread == None or not self.control_thread.is_alive():
+            self.stop_thread.acquire()
+            self.control_thread = threading.Thread(target=self.control_loop)
+            self.control_thread.start()
+        else:
+            print("already running!")
 
     def stop(self):
-        print("got stop command")
+        try:
+            self.stop_thread.release()
+        except:
+            print("already stopped!")
 
     def save(self, form):
         enabled = [False]*10
@@ -109,6 +141,3 @@ class Backend:
 
         self.plate_names = names
         self.plate_enabled = enabled
-        print(self.freq)
-        print(names)
-        print(enabled)
