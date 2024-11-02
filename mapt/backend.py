@@ -98,10 +98,10 @@ class Backend:
             if key == "freq":
                 self.freq = form[key]
             elif plate_enable_re.match(key):
-                plate = plate_enable_re.match(key).group(1)
+                plate = int(plate_enable_re.match(key).group(1))
                 self.plate_enabled[plate] = True
             elif plate_name_re.match(key):
-                plate = plate_name_re.match(key).group(1)
+                plate = int(plate_name_re.match(key).group(1))
                 self.plate_names[plate] = form[key]
             elif key == "action":
                 pass
