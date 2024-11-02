@@ -100,5 +100,7 @@ class Backend:
                 print("got plate enable: ", key)
             elif plate_name_re.match(key):
                 print("got plate name: "+key)
+            elif key == "action":
+                pass
             else:
                 print("unknown key: "+key)
