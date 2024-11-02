@@ -102,7 +102,8 @@ class Backend:
                 self.plate_enabled[plate-1] = True
             elif plate_name_re.match(key):
                 plate = int(plate_name_re.match(key).group(1))
-                print(plate)
+                print("got name for plate "+plate)
+                print(form[key])
                 self.plate_names[plate-1] = form[key]
             elif key == "action":
                 pass
