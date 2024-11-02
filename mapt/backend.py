@@ -76,3 +76,12 @@ class Backend:
 
     def take_pic(self):
         pass # TODO
+
+    def start(self):
+        print("got start command")
+
+    def stop(self):
+        print("got stop command")
+
+    def save(self):
+        print("got save command")
