@@ -55,6 +55,7 @@ class Backend:
     plate_location = list(range(15, 21, 15+21*5))
     plate_names = [""]*10
     plate_enabled = [False]*10
+    freq = 6
 
     def __init__(self):
         self.comm = MotorCtrl()
@@ -87,6 +88,10 @@ class Backend:
 
     def save(self, form):
         print("got save command")
-        for i in form:
-            print(i,form[i])
-
+        for key in form:
+            if key == "freq":
+                self.freq = form[key]
+            elif plate_enable_re.match(key):
+                print("got plate enable: ", key)
+            elif plate_name_re.match(key):
+                print("got plate name: "+key)
