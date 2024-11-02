@@ -94,6 +94,7 @@ class Backend:
         print("got save command")
         for key in form:
             if key == "freq":
+                print("got freq: "+form[key])
                 self.freq = form[key]
             elif plate_enable_re.match(key):
                 print("got plate enable: ", key)
