@@ -98,6 +98,8 @@ class Backend:
                 self.freq = form[key]
             elif plate_enable_re.match(key):
                 print("got plate enable: ", key, plate_enable_re.match(key).groups())
+                plate = plate_enable_re.match(key).group(1)
+                print(plate)
             elif plate_name_re.match(key):
                 print("got plate name: "+key)
             elif key == "action":
