@@ -4,7 +4,7 @@ import time
 import threading
 import sys
 import re
-import pycamera
+import picamera
 
 plate_enable_re = re.compile('plt([0-9]+)_status')
 plate_name_re = re.compile('plt([0-9]+)_name')
@@ -86,7 +86,7 @@ class Backend:
         self.comm.send_gcode("M18")
 
     def flash(self, on):
-        self.comm.send_gcode("SET_PIN PIN=flash VALUE=%d"%on?1:0)
+        self.comm.send_gcode("SET_PIN PIN=flash VALUE=%d"%(1 if on else 0))
 
     def take_pic(self):
         self.comm.send_gcode("G91")
