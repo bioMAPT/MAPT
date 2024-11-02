@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 
 from .backend import Backend
 
-backend = Backend()
+#backend = Backend()
 
 app=Flask(__name__, template_folder='templates')
 
@@ -17,13 +17,15 @@ settings={"plt1_name":"",
           "plt9_name":"",
           "plt10_name":""}
 
-@app.route('/register_press', methods=["POST"])
-def register_press():
-        print("Start")
-        return index()
-
-@app.route('/')
+@app.route('/', methods=["POST", "GET"])
 def index():
+    if request.method == "POST":
+        if request.form["action"] == "start":
+            backend.start()
+        elif request.form["action"] == "stop":
+            backend.stop()
+        elif request.form["action"] == "save":
+            backend.save(request.form)
     return render_template("index.html")
 
 if __name__ == '__main__':
