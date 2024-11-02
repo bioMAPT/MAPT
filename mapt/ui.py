@@ -1,5 +1,9 @@
 from flask import Flask, render_template, request
 
+from . import backend
+
+backend = Backend()
+
 app=Flask(__name__, template_folder='templates')
 
 settings={"plt1_name":"",
