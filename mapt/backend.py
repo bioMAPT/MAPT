@@ -53,6 +53,8 @@ class Magnet:
 
 class Backend:
     plate_location = list(range(15, 21, 15+21*5))
+    plate_names = [""]*10
+    plate_enabled = [False]*10
 
     def __init__(self):
         self.comm = MotorCtrl()
@@ -85,4 +87,6 @@ class Backend:
 
     def save(self, form):
         print("got save command")
-        print(form)
+        for i in form:
+            print(i)
+
