@@ -4,7 +4,7 @@ import time
 import threading
 import sys
 import re
-import picamera
+import picamera2
 
 plate_enable_re = re.compile('plt([0-9]+)_status')
 plate_name_re = re.compile('plt([0-9]+)_name')
