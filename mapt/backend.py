@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 import serial
 import time
 import threading
@@ -25,8 +24,7 @@ class MotorCtrl:
             if line[:2] == "!!":
                 continue
             else:
-                print("Error: ")
-                print(line)
+                print("Error: %s"%line)
                 sys.exit(0)
 
 class Magnet:
@@ -58,15 +56,15 @@ class Magnet:
 
 class Backend:
     plate_location = list(range(15, 21, 15+21*5)) + list(range(150, 21, 150+21*5))
-    plate_names = [""]*10
-    plate_enabled = [False]*10
-    freq = 6
-    control_thread = None
-    stop_thread = threading.Lock()
 
     def __init__(self):
         self.comm = MotorCtrl()
         self.magnet = Magnet(self.comm)
+        self.stop_thread = threading.Lock()
+        self.plate_names = [""]*10
+        self.plate_enabled = [False]*10
+        self.freq = 6
+        self.control_thread = None
 
     def home(self):
         self.comm.send_gcode("G28 X Z")
