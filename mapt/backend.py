@@ -1,17 +1,18 @@
 #!/usr/bin/python3
 
-from serial import Serial
+import serial
 import time
 import threading
 import sys
 import re
+import pycamera
 
 plate_enable_re = re.compile('plt([0-9]+)_status')
 plate_name_re = re.compile('plt([0-9]+)_name')
 
 class MotorCtrl:
     def __init__(self):
-        self.comm = Serial(port='/tmp/printer')
+        self.comm = serial.Serial(port='/tmp/printer')
 
     def flush(self):
         while ser.inWaiting() > 0:
@@ -84,10 +85,19 @@ class Backend:
         self.comm.send_gcode("G0 X155")
 
     def disable_motors(self):
-        pass #TODO
+        self.comm.send_gcode("M18")
+
+    def flash(self, on):
+        self.comm.send_gcode("SET_PIN PIN=flash VALUE=%d"%on?1:0)
 
     def take_pic(self):
-        pass # TODO
+        self.comm.send_gcode("G91")
+        self.comm.send_gcode("G0 Z-5")
+        self.flash(True)
+        time.sleep(0.5) # TODO: take pic
+        self.flash(False)
+        self.comm.send_gcode("G0 Z5")
+        self.comm.send_gcode("G90")
 
     def control_loop(self):
         while self.stop_thread.acquire(False) == False:

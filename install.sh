@@ -34,7 +34,7 @@ install_klipper(){(
 )}
 
 install_mapt(){(
-	sudo apt install -y python3-serial python3-flask
+	sudo apt install -y python3-serial python3-flask python3-picamera2
 
 	# install the klipper config
 	ln -s ${PWD}/klipper.cfg ${HOME}/printer.cfg
