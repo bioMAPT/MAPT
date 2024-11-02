@@ -97,7 +97,7 @@ class Backend:
                 print("got freq: "+form[key])
                 self.freq = form[key]
             elif plate_enable_re.match(key):
-                print("got plate enable: ", key)
+                print("got plate enable: ", key, plate_enable_re.match(key).groups())
             elif plate_name_re.match(key):
                 print("got plate name: "+key)
             elif key == "action":
