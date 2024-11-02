@@ -94,6 +94,7 @@ class Backend:
         print("got save command")
         self.plate_enabled = [False]*10
         self.plate_names = [""]*10
+        print(form)
         for key in form:
             if key == "freq":
                 self.freq = form[key]
