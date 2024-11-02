@@ -65,7 +65,7 @@ class Backend:
         self.plate_enabled = [False]*10
         self.freq = 6
         self.control_thread = None
-        self.cam = picamera2.PiCamera()
+        self.cam = picamera2.Picamera2()
         self.calibrate_cam()
 
     def calibrate_cam(self):
