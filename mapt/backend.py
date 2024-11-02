@@ -65,6 +65,20 @@ class Backend:
         self.plate_enabled = [False]*10
         self.freq = 6
         self.control_thread = None
+        self.cam = picamera2.PiCamera()
+        self.calibrate_cam()
+
+    def calibrate_cam(self):
+        self.flash(True)
+        self.cam.iso = 100
+        self.cam.start_preview()
+        time.sleep(2)
+        self.cam.shutter_speed = self.cam.exposure_speed
+        self.cam.exposure_mode = 'off'
+        g = self.cam.awb_gains
+        self.cam.awb_mode = 'off'
+        self.cam.awb_gains = g
+        self.flash(False)
 
     def home(self):
         self.comm.send_gcode("G28 X Z")
@@ -88,11 +102,14 @@ class Backend:
     def flash(self, on):
         self.comm.send_gcode("SET_PIN PIN=flash VALUE=%d"%(1 if on else 0))
 
-    def take_pic(self):
+    def take_pic(self, plate):
+        file_name = "plate_%d_%s.jpg"%(plate, time.strftime("%Y-%m-%d-%H:%M:%S"))
+
         self.comm.send_gcode("G91")
         self.comm.send_gcode("G0 Z-5")
         self.flash(True)
-        time.sleep(0.5) # TODO: take pic
+        time.sleep(0.1)
+        self.cam.capture(file_name)
         self.flash(False)
         self.comm.send_gcode("G0 Z5")
         self.comm.send_gcode("G90")
