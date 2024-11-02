@@ -85,3 +85,4 @@ class Backend:
 
     def save(self, form):
         print("got save command")
+        print(form)
