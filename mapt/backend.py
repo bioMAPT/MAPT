@@ -91,24 +91,21 @@ class Backend:
         print("got stop command")
 
     def save(self, form):
-        print("got save command")
-        self.plate_enabled = [False]*10
-        self.plate_names = [""]*10
-        print(form)
+        enabled = [False]*10
+        names = [""]*10
         for key in form:
             if key == "freq":
                 self.freq = form[key]
             elif plate_enable_re.match(key):
                 plate = int(plate_enable_re.match(key).group(1))
-                self.plate_enabled[plate-1] = True
+                enabled[plate-1] = True
             elif plate_name_re.match(key):
                 plate = int(plate_name_re.match(key).group(1))
-                print("got name for plate "+str(plate))
-                print(form[key])
-                self.plate_names[plate-1] = form[key]
+                names[plate-1] = form[key]
             elif key == "action":
                 pass
             else:
                 print("unknown key: "+key)
-        print(self.plate_enabled)
-        print(self.plate_names)
+
+        self.plate_names = names
+        self.plate_enabled = enabled
