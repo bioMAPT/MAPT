@@ -20,7 +20,7 @@ settings={"plt1_name":"",
 @app.route('/register_press', methods=["POST"])
 def register_press():
         print("Start")
-        return "Button press registered successfully!"
+        return index()
 
 @app.route('/')
 def index():
