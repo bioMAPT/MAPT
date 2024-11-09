@@ -1,10 +1,17 @@
 #!/usr/bin/python3
-import serial
 import time
 import threading
 import sys
 import re
-import picamera2
+import sqlite3
+
+try:
+    import serial
+except:
+    pass
+
+
+#cursor.execute("CREATE TABLE IF NOT EXISTS settings (plate_num INTEGER PRIMARY KEY, name TEXT, status BOOL)")
 
 plate_enable_re = re.compile('plt([0-9]+)_status')
 plate_name_re = re.compile('plt([0-9]+)_name')
@@ -66,17 +73,21 @@ class Backend:
     plate_location = list(range(12, 12+21*5, 21)) + list(range(125, 125+21*5, 21))
 
     def __init__(self):
-        self.comm = MotorCtrl()
-        self.magnet = Magnet(self.comm)
+        #self.comm = MotorCtrl()
+        #self.magnet = Magnet(self.comm)
         self.stop_thread = threading.Lock()
         self.plate_names = [""]*10
         self.plate_enabled = [False]*10
         self.freq = 6
         self.control_thread = None
-        self.cam = picamera2.Picamera2()
-        self.cam.start(show_preview=False)
-        self.capture_config = self.cam.create_still_configuration()
-        #self.calibrate_cam()
+        try:
+            import picamera2
+            self.cam = picamera2.Picamera2()
+            self.cam.start(show_preview=False)
+            self.capture_config = self.cam.create_still_configuration()
+            #self.calibrate_cam()
+        except:
+            pass
 
     def calibrate_cam(self):
         self.flash(True)
@@ -163,17 +174,26 @@ class Backend:
             print("already stopped!")
 
     def save(self, form):
+        connection = sqlite3.connect("mapt.db")
+        cursor = connection.cursor()
         enabled = [False]*10
         names = [""]*10
         for key in form:
             if key == "freq":
                 self.freq = form[key]
+
             elif plate_enable_re.match(key):
                 plate = int(plate_enable_re.match(key).group(1))
-                enabled[plate-1] = True
+                print("enable", plate)
+                print(key)
+                enabled[plate] = True
+
             elif plate_name_re.match(key):
                 plate = int(plate_name_re.match(key).group(1))
-                names[plate-1] = form[key]
+                print("name:",plate)
+                print(key)
+                names[plate] = form[key]
+
             elif key == "action":
                 pass
             else:
@@ -181,6 +201,21 @@ class Backend:
 
         self.plate_names = names
         self.plate_enabled = enabled
+
+        for i in range(10):
+            cursor.execute(f"INSERT OR REPLACE INTO settings VALUES ({i}, '{self.plate_names[i]}', '{self.plate_enabled[i]}')")
+            print(f"INSERT OR REPLACE INTO settings VALUES ({i}, '{self.plate_names[i]}', '{self.plate_enabled[i]}')")
+        connection.commit()
+
+    def get_settings(self):
+        connection = sqlite3.connect("mapt.db")
+        cursor = connection.cursor()
+        print("TEST")
+        cur = cursor.execute("SELECT * FROM settings").fetchall()
+        print("SQL: ",cur)
+        return cur
+
+
 
 if __name__ == "__main__":
     b = Backend()

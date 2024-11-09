@@ -5,136 +5,55 @@
     <title>BioMAPT UI</title>
 </head>
 <body>
-            <form action="/" method="POST">
-    <p>BioMAPT UI</p>
-    </br>
-                <button type="submit" value="start" name="action">START</button>
-                <button type="submit" value="stop" name="action">STOP</button>
-    </br>
-
-
-    <table>
-        <caption>Picture Frequency</caption>
-    <tr>
-        <th>4 Hrs</th>
-        <th>6 Hrs</th>
-        <th>12 Hrs</th>
-        <th>24 Hrs</th>
-        <th>Custom</th>
-    </tr>
-    <tr>
-        <td>
-            <input type="radio" value="4" name="freq">
-        </td>
-        <td>
-            <input type="radio" value="6" name="freq">
-        </td>
-        <td>
-            <input type="radio" value="12" name="freq">
-        </td>
-        <td>
-            <input type="radio" value="24" name="freq">
-        </td>
-    </tr>
-    </br></br>
-    <table>
-    <tr>
-        <th>Plate Location</th>
-        <th>Contents</th>
-        <th>Take picture?</th>
-    </tr>
-    <tr>
-        <td>10</td>
-        <td>
-                <input type="text" id="plt10_name" name="plt10_name"><br>
-        </td>
-        <td>
-            <input type="checkbox" id="plt10_status" name="plt10_status">
-        </td>
-    </tr>
-    <tr>
-        <td>9</td>
-        <td>
-                <input type="text" id="plt9_name" name="plt9_name"><br>
-        </td>
-        <td>
-            <input type="checkbox" id="plt9_status" name="plt9_status">
-        </td>
-    </tr>
-        <tr>
-        <td>8</td>
-        <td>
-                <input type="text" id="plt8_name" name="plt8_name"><br>
-        </td>
-        <td>
-            <input type="checkbox" id="plt8_status" name="plt8_status">
-        </td>
-    </tr>
-        <tr>
-        <td>7</td>
-        <td>
-                <input type="text" id="plt7_name" name="plt7_name"><br>
-        </td>
-        <td>
-            <input type="checkbox" id="plt7_status" name="plt7_status">
-        </td>
-    </tr>
-        <tr>
-        <td>6</td>
-        <td>
-                <input type="text" id="plt6_name" name="plt6_name"><br>
-        </td>
-        <td>
-            <input type="checkbox" id="plt6_status" name="plt6_status">
-        </td>
-    </tr>
-        <tr>
-        <td>5</td>
-        <td>
-                <input type="text" id="plt5_name" name="plt5_name"><br>
-        </td>
-        <td>
-            <input type="checkbox" id="plt5_status" name="plt5_status">
-        </td>
-    </tr>
-        <tr>
-        <td>4</td>
-        <td>
-                <input type="text" id="plt4_name" name="plt4_name"><br>
-        </td>
-        <td>
-            <input type="checkbox" id="plt4_status" name="plt4_status">
-        </td>
-    </tr>
-        <tr>
-        <td>3</td>
-        <td>
-                <input type="text" id="plt3_name" name="plt3_name"><br>
-        </td>
-        <td>
-            <input type="checkbox" id="plt3_status" name="plt3_status">
-        </td>
-    </tr>
-        <tr>
-        <td>2</td>
-        <td>
-                <input type="text" id="plt2_name" name="plt2_name"><br>
-        </td>
-        <td>
-            <input type="checkbox" id="plt2_status" name="plt2_status">
-        </td>
-    </tr>
-        <tr>
-        <td>1</td>
-        <td>
-                <input type="text" id="plt1_name" name="plt1_name"><br>
-        </td>
-        <td>
-            <input type="checkbox" id="plt1_status" name="plt1_status">
-        </td>
-    </tr>
-    </table>
-    <button type="submit" name="action" value="save">Save Settings</button>
-            </form>
+    <form action="/" method="POST">
+        <h2>BioMAPT UI</h2>
+        <br/>
+        <button type="submit" value="start" name="action">START</button>
+        <button type="submit" value="stop" name="action">STOP</button>
+        <br/>
+        <table>
+            <caption>Picture Frequency</caption>
+            <tr>
+                <th>4 Hrs</th>
+                <th>6 Hrs</th>
+                <th>12 Hrs</th>
+                <th>24 Hrs</th>
+                <th>Custom</th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="radio" value="4" name="freq">
+                </td>
+                <td>
+                    <input type="radio" value="6" name="freq">
+                </td>
+                <td>
+                    <input type="radio" value="12" name="freq">
+                </td>
+                <td>
+                    <input type="radio" value="24" name="freq">
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>Plate Location</th>
+                <th>Contents</th>
+                <th>Take picture?</th>
+            </tr>
+            {% for i in range(9,-1,-1) %}
+                <tr>
+                    <td>{{ i+1 }}</td>
+                    <td>
+                        <input type="text" id="plt{{ i }}_name" value="{{plt_name[i]}}" name="plt{{ i }}_name"><br>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="plt{{ i }}_status" {{ 'checked' if plt_status[i] else '' }} name="plt{{ i }}_status">
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <button type="submit" name="action" value="save">Save Settings</button>
+    </form>
 </body>
 </html>
