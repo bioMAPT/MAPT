@@ -8,8 +8,8 @@
     <form action="/" method="POST">
         <h2>BioMAPT UI</h2>
         <br/>
-        <button type="submit" value="start" name="action">START</button>
-        <button type="submit" value="stop" name="action">STOP</button>
+	<button type="submit" value="start" name="action" {{ "disabled" if running }}>START</button>
+	<button type="submit" value="stop" name="action" {{ "disabled" if not running }}>STOP</button>
         <br/>
         <table>
             <caption>Picture Frequency</caption>
@@ -22,16 +22,19 @@
             </tr>
             <tr>
                 <td>
-                    <input type="radio" value="4" name="freq">
+			<input type="radio" value="4" name="freq" {{ "checked" if freq == 4 else "" }} >
                 </td>
                 <td>
-                    <input type="radio" value="6" name="freq">
+                    <input type="radio" value="6" name="freq" {{ "checked" if freq == 6 else "" }} >
                 </td>
                 <td>
-                    <input type="radio" value="12" name="freq">
+                    <input type="radio" value="12" name="freq" {{ "checked" if freq == 12 else "" }} >
                 </td>
                 <td>
-                    <input type="radio" value="24" name="freq">
+                    <input type="radio" value="24" name="freq" {{ "checked" if freq == 24 else "" }} >
+                </td>
+                <td>
+                    <input type="radio" value="custom" name="freq" disabled >
                 </td>
             </tr>
         </table>
@@ -45,10 +48,10 @@
                 <tr>
                     <td>{{ i+1 }}</td>
                     <td>
-                        <input type="text" id="plt{{ i }}_name" value="{{plt_name[i]}}" name="plt{{ i }}_name"><br>
+                        <input type="text" id="plt{{ i }}_name" value="{{plates[i][1]}}" name="plt{{ i }}_name"><br>
                     </td>
                     <td>
-                        <input type="checkbox" id="plt{{ i }}_status" {{ 'checked' if plt_status[i] else '' }} name="plt{{ i }}_status">
+                        <input type="checkbox" id="plt{{ i }}_status" {{ 'checked' if plates[i][2] else '' }} name="plt{{ i }}_status">
                     </td>
                 </tr>
             {% endfor %}

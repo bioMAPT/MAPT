@@ -59,6 +59,7 @@ WantedBy=multi-user.target
 [Service]
 User=${USER}
 Environment=PYTHONPATH=${PWD}
+ExecStartPre=+chown ${USER} /sys/class/leds/ACT/brightness
 ExecStart=authbind python -m mapt
 EOF
 
@@ -66,8 +67,14 @@ EOF
 	sudo systemctl enable --now mapt
 )}
 
+configure_system(){
+	# keep ACT LED disabled until MAPT daemon turns it on
+	echo "dtparam=act_led_trigger=none" | sudo tee -a /boot/firmware/config.txt > /dev/null
+}
+
 install_klipper
 install_mapt
+configure_system
 
 echo
 echo "Finished installing MAPT. The raspberry pi will now reboot. Wait 2 minutes, then navigate to http://$(hostname).local/ from a device on the same wifi network."
